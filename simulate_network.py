@@ -86,6 +86,30 @@ def plot_LFP(data):
     plt.yticks([])
     plt.tight_layout()
     plt.show()
+    
+def evaluate(W):
+    """
+    Parameters
+    ----------
+    W:      estimate of the effective connectivity
+
+    Returns
+    -------
+    Mean squared error of the difference between the ground truth and the estimated connectivity
+    """
+    W_gt = np.array(    # ground truth connectivity
+        [[0.51,  -1.000, 0.454, -0.433, 0.037, -0.000, 0.025, -0.000],
+         [0.195, -0.225, 0.046, -0.076, 0.025, -0.000, 0.004, -0.000],
+         [0.039, -0.034, 0.274, -0.780, 0.008, -0.000, 0.164, -0.000],
+         [0.091, -0.004, 0.111, -0.234, 0.001, -0.000, 0.099, -0.000],
+         [0.119, -0.081, 0.062, -0.007, 0.023, -0.108, 0.016, -0.000],
+         [0.014, -0.008, 0.007, -0.001, 0.004, -0.019, 0.001, -0.000],
+         [0.052, -0.025, 0.075, -0.059, 0.046, -0.014, 0.094, -0.485],
+         [0.025, -0.001, 0.002, -0.000, 0.004, -0.001, 0.032, -0.061]])
+
+    W_est = W / np.max(abs(W))
+
+    return np.mean(((W_gt - W_est)**2))
 
 if __name__ == "__main__":
 
