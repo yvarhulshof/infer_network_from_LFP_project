@@ -40,7 +40,7 @@ sim_dict = {
     # list of recording devices, default is 'spike_recorder'. A 'voltmeter' can
     # be added to record membrane voltages of the neurons. Nothing will be
     # recorded if an empty list is given.
-    'rec_dev': ['voltmeter'],
+    'rec_dev': ['voltmeter', 'currentmeter'],
     # path to save the output data
     'data_path': os.path.join(os.getcwd(), 'data/'),
     # Seed for NEST
@@ -49,6 +49,8 @@ sim_dict = {
     'local_num_threads': 1,
     # recording interval of the membrane potential (in ms)
     'rec_V_int': 1.0,
+    # recording interval of the synaptic current (in ms)
+    'rec_I_int': 1.0,
     # if True, data will be overwritten,
     # if False, a NESTError is raised if the files already exist
     'overwrite_files': True,

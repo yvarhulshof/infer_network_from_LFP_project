@@ -300,6 +300,22 @@ class Network:
                                           n=self.num_pops,
                                           params=vm_dict)
 
+        if 'currentmeter' in self.sim_dict['rec_dev']:
+            ie_dict = {'interval': self.sim_dict['rec_I_int'],
+                       'record_to': 'ascii',
+                       'record_from': ['I_syn_ex'],
+                       'label': os.path.join(self.data_path, 'currentmeter_E')}
+            self.E_currentmeters = nest.Create('multimeter',
+                                             n=self.num_pops,
+                                             params=ie_dict)
+            ii_dict = {'interval': self.sim_dict['rec_I_int'],
+                       'record_to': 'ascii',
+                       'record_from': ['I_syn_in'],
+                       'label': os.path.join(self.data_path, 'currentmeter_I')}
+            self.I_currentmeters = nest.Create('multimeter',
+                                             n=self.num_pops,
+                                             params=ii_dict)
+            
     def __create_poisson_bg_input(self):
         """ Creates the Poisson generators for ongoing background input if
         specified in ``network_params.py``.
@@ -395,6 +411,11 @@ class Network:
                 nest.Connect(target_pop, self.spike_recorders[i])
             if 'voltmeter' in self.sim_dict['rec_dev']:
                 nest.Connect(self.voltmeters[i], target_pop)
+            if 'currentmeter' in self.sim_dict['rec_dev']:
+                nest.Connect(self.E_currentmeters[i], target_pop)
+            if 'currentmeter' in self.sim_dict['rec_dev']:
+                nest.Connect(self.I_currentmeters[i], target_pop)
+
 
     def __connect_poisson_bg_input(self):
         """ Connects the Poisson generators to the microcircuit."""
